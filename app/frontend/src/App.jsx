@@ -44,6 +44,7 @@ export default function App() {
   const [formData, setFormData] = useState(initialFormData);
   const [result, setResult] = useState(mockResult);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("churn-theme") || "system";
   });
@@ -84,14 +85,22 @@ export default function App() {
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    const prediction = await predictChurn(formData);
-    setResult(prediction);
-    setIsLoading(false);
+    setError("");
+
+    try {
+      const prediction = await predictChurn(formData);
+      setResult(prediction);
+    } catch (requestError) {
+      setError(requestError.message || "Unable to score this customer.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleReset() {
     setFormData(initialFormData);
     setResult(mockResult);
+    setError("");
   }
 
   return (
@@ -106,6 +115,7 @@ export default function App() {
           isLoading={isLoading}
         />
         <aside className="result-column">
+          {error && <div className="error-panel">{error}</div>}
           <ResultCard result={result} />
         </aside>
       </div>

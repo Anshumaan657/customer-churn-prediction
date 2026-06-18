@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.prediction import artifacts_are_loaded, predict_churn
 from src.api.schemas import CustomerInput, HealthResponse, PredictionResponse
@@ -8,6 +9,17 @@ app = FastAPI(
     title="Customer Churn Prediction API",
     description="FastAPI backend for predicting credit card customer churn risk.",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5173",
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

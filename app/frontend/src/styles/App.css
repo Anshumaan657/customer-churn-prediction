@@ -194,7 +194,8 @@ h2 {
 }
 
 .form-section,
-.result-card {
+.result-card,
+.error-panel {
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -254,7 +255,7 @@ h2 {
 
 .form-section,
 .result-card,
-.context-panel {
+.error-panel {
   border-radius: 8px;
 }
 
@@ -370,6 +371,14 @@ h2 {
 
 .result-card {
   padding: 22px;
+}
+
+.error-panel {
+  padding: 14px 16px;
+  border-color: color-mix(in srgb, var(--danger) 42%, var(--border));
+  background: color-mix(in srgb, var(--danger) 12%, var(--surface));
+  color: var(--text);
+  font-weight: 700;
 }
 
 .result-topline {
